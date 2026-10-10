@@ -63,7 +63,7 @@ Estimates are in monthly percentage-point units; shock parameters are standard d
 | Annual-observation fit | 2.20921 | 1.60944 |
 | Current annual sum benchmark | 2.43691 | 1.67285 |
 
-| Annual lag-12 correlation $\operatorname{corr}(z_t,z_{t-12})$ | Value |
+| Annual lag-12 correlation `corr(z_t, z_{t-12})` | Value |
 | --- | ---: |
 | Historical sample | 0.60718 |
 | Monthly-fit implied | 0.16905 |
