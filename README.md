@@ -8,9 +8,6 @@ January 1947 through December 2024, 925 overlapping twelve-month sums, and
 
 [Read the full report](report/Inflation_State_Space_Report.pdf)
 
-The report retains the original submission packaging description. The repository
-layout and execution instructions below apply to this portfolio version.
-
 ## Research Question
 
 How much of monthly U.S. inflation reflects a persistent latent component rather
@@ -35,6 +32,15 @@ full derivation, joint stationary prior and system matrices appear in Notebook 0
 and the report. Estimation uses the Kalman innovation likelihood; reported SEs
 use the full likelihood Hessian and the delta method.
 
+## Methodology
+
+Estimation maximizes the Gaussian innovation likelihood with parameter-dependent
+stationary initialization and four optimization starts. Observed information comes
+from the full likelihood Hessian; the delta method converts uncertainty to the
+reported parameter scales. Simulation checks parameter recovery, and repeated
+Monte Carlo sampling evaluates uncertainty calibration. Independent monthly and
+annual fits are compared on identical forecast targets.
+
 ## Workflow
 
 1. Specify the monthly latent AR(1) model and stationary prior.
@@ -45,8 +51,8 @@ use the full likelihood Hessian and the delta method.
 6. Diagnose economic persistence using four simulated paths and annual correlations.
 7. Calibrate parameter standard errors with 200 Monte Carlo replications at T=936.
 
-The Monte Carlo appendix is a supplementary extension, separate from the six
-formal coursework tasks. Every attempt and its validity flags are retained.
+The Monte Carlo appendix is a supplementary uncertainty-calibration study.
+Every attempt and its validity flags are retained.
 
 ## Key Results
 
@@ -70,10 +76,18 @@ Estimates are in monthly percentage-point units; shock parameters are standard d
 | Annual-fit implied | 0.33895 |
 
 The annual-observation fit yields greater latent persistence and lower retrospective
-RMSE and MAE. The monthly fit improves on the benchmark in RMSE but has higher MAE.
+RMSE and MAE. Its RMSE is approximately 7.4% below the monthly fit's value. The monthly fit improves on the benchmark in RMSE but has higher MAE.
 Both models materially understate the historical correlation between annual windows
 that share no months. Successful numerical validation therefore does not establish
 complete economic adequacy, and observation correlation differs from $\phi^{12}$.
+
+## Model Limitations
+
+The model holds the mean, persistence and shock variances constant over 1947-2024.
+Both fits understate historical nonoverlapping annual persistence; successful
+implementation checks do not establish that the specification captures changing
+inflation regimes. Hessian standard errors are model-based, with imperfect
+finite-sample Monte Carlo calibration.
 
 Forecasts use filtered states and propagate twelve months without intervening
 observation updates. Parameters are estimated from the full historical sample,
@@ -90,8 +104,8 @@ so this is a retrospective comparison, not genuine out-of-sample evidence.
 | `notebooks/05_Estimate_Annual_Model_and_Forecast.ipynb` | Annual simulation validation, independent historical fits and 913 common forecasts. |
 | `notebooks/06_Simulate_and_Diagnose.ipynb` | Independent fits, four economic simulations and annual persistence diagnosis. |
 | `data/US_inflation47_25.csv` | Unmodified course-supplied monthly data snapshot; the filename ends in 25, but the sample ends in 2024. |
-| `report/Inflation_State_Space_Report.pdf` | Final research report, copied without modification. |
-| `docs/AI_Prompts_and_Material_Corrections.pdf` | Key AI prompts and material mathematical and implementation corrections. |
+| `report/Inflation_State_Space_Report.pdf` | Formal research note with the same scientific results and sole-author portfolio presentation. |
+| `docs/AI_Assistance_and_Validation.md` | Accurate summary of AI assistance, material corrections and validation boundaries. |
 | `scripts/run_all_notebooks.py` | Sequential execution in six independent kernels, saving embedded results. |
 | `REPRODUCIBILITY_CHECK.md` | Actual clean-install, execution and numerical comparison record. |
 
@@ -153,30 +167,24 @@ and SciPy 1.15.3 with OpenBLAS. Linux, Windows and Intel macOS clean installatio
 have not been verified. Windows uses `.venv\Scripts\python.exe` and the corresponding
 activation command. Initial installation requires internet access.
 
-## Authors
+## Author
 
-QIDIAN XING  
-MICHAEL SUHERMAN  
-GUS GUENTHER  
-ENDI ZONANA
+**QIDIAN XING**
 
-## Course Context
+## Provenance
 
-MGMTMFE 431 — Advanced Data Analytics and AI  
-UCLA Anderson School of Management
-
-This project uses the supplied historical data snapshot. Its upstream provenance
-and a separate dataset redistribution license were not specified in the supplied
-materials. Instructor assignment documents, slides and private development records
-are excluded from this repository.
+The project originated in an MFE course setting. This personal portfolio edition
+presents QIDIAN XING's individual research implementation, as stated by the author.
+The original coursework materials and four-author submission remain preserved in
+the private development archive and prior Git history.
+The supplied data snapshot is unchanged. Its upstream provenance and a separate
+redistribution license were not specified in the supplied materials. Instructor
+assignment documents, slides and private development records are excluded from
+the current repository tree.
 
 ## AI Assistance
 
-AI was used as a research and coding assistant for model derivation, implementation,
-debugging and verification. Key prompts and material corrections are documented
-in [AI Prompts and Material Corrections](docs/AI_Prompts_and_Material_Corrections.pdf).
-
-## Academic-use Note
-
-This repository documents completed coursework and is provided for research and
-educational reference. It should not be submitted as another student's coursework.
+AI assisted model derivation, implementation, debugging and verification. The
+[AI Assistance and Validation](docs/AI_Assistance_and_Validation.md) summary
+describes its role, material corrections and the limits of the validation evidence.
+It is a new portfolio summary, not a rewritten historical prompt transcript.
